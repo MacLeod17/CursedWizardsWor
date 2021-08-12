@@ -9,14 +9,15 @@ public class GameController : MonoBehaviour
 {
     public GameObject titleScreen;
     public GameObject optionsScreen;
+    public GameObject instructionsScreen;
     public GameObject pauseScreen;
-    public Transition transition;
 
     public AudioMixer audioMixer;
 
     public Slider[] masterSliders;
     public Slider[] musicSliders;
     public Slider[] sfxSliders;
+    public Slider[] voiceSliders;
 
     public int highScore = 0;
 
@@ -33,8 +34,15 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(this);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Start()
@@ -42,9 +50,10 @@ public class GameController : MonoBehaviour
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         //PlayerPrefs.SetInt("HighScore", highScore);
 
-        OnMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 0));
-        OnMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 0));
-        OnSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 0));
+        OnMasterVolume(0);
+        OnMusicVolume(0);
+        OnSFXVolume(0);
+        OnSFXVolume(0);
 
         foreach (var slider in masterSliders)
         {
@@ -59,6 +68,11 @@ public class GameController : MonoBehaviour
         foreach (var slider in sfxSliders)
         {
             audioMixer.GetFloat("SFXVolume", out float volume);
+            slider.value = volume;
+        }
+        foreach (var slider in voiceSliders)
+        {
+            audioMixer.GetFloat("VoiceVolume", out float volume);
             slider.value = volume;
         }
     }
@@ -79,10 +93,6 @@ public class GameController : MonoBehaviour
 
     IEnumerator LoadGameScene(string scene)
     {
-        transition.StartTransition(Color.black, 1);
-
-        while (!transition.IsDone) { yield return null; }
-
         titleScreen.SetActive(false);
         SceneManager.LoadScene(scene);
 
@@ -99,10 +109,6 @@ public class GameController : MonoBehaviour
 
     IEnumerator LoadMenuScene(string scene)
     {
-        transition.StartTransition(Color.black, 1);
-
-        while (!transition.IsDone) { yield return null; }
-
         titleScreen.SetActive(true);
         SceneManager.LoadScene(scene);
 
@@ -113,12 +119,19 @@ public class GameController : MonoBehaviour
     {
         titleScreen.SetActive(true);
         optionsScreen.SetActive(false);
+        instructionsScreen.SetActive(false);
     }
 
     public void OnOptionsScreen()
     {
         titleScreen.SetActive(false);
         optionsScreen.SetActive(true);
+    }
+
+    public void OnInstructionsScreen()
+    {
+        titleScreen.SetActive(false);
+        instructionsScreen.SetActive(true);
     }
 
     public void OnPauseScreen()
@@ -170,5 +183,11 @@ public class GameController : MonoBehaviour
     {
         audioMixer.SetFloat("SFXVolume", level);
         PlayerPrefs.SetFloat("SFXVolume", level);
+    }
+
+    public void OnVoiceVolume(float level)
+    {
+        audioMixer.SetFloat("VoiceVolume", level);
+        PlayerPrefs.SetFloat("VoiceVolume", level);
     }
 }

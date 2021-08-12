@@ -77,7 +77,7 @@ public class GameSession : MonoBehaviour
             case eState.StartSession:
                 if (gameOverScreen != null) gameOverScreen.SetActive(false);
                 if (winGameScreen != null) winGameScreen.SetActive(false);
-                GameController.Instance.transition.StartTransition(Color.clear, 1);
+                //GameController.Instance.transition.StartTransition(Color.clear, 1);
                 State = eState.Session;
                 break;
             case eState.Session:
