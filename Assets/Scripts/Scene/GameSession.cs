@@ -51,12 +51,12 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
-        HighScore = GameController.Instance.highScore;
+        HighScore = (GameController.Instance != null) ? GameController.Instance.highScore : 0;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && GameController.Instance != null)
         {
             GameController.Instance.OnPause();
         }
@@ -112,7 +112,7 @@ public class GameSession : MonoBehaviour
 
     public void QuitToMainMenu()
     {
-        GameController.Instance.OnLoadMenuScene("MainMenu");
+        if (GameController.Instance != null) GameController.Instance.OnLoadMenuScene("MainMenu");
     }
 
     private void SetHighScore()
@@ -120,7 +120,7 @@ public class GameSession : MonoBehaviour
         if (Score > HighScore)
         {
             HighScore = Score;
-            GameController.Instance.SetHighScore(HighScore);
+            if (GameController.Instance != null) GameController.Instance.SetHighScore(HighScore);
             if (highScoreUI != null) highScoreUI.text = string.Format("{0:D4}", HighScore);
         }
     }
