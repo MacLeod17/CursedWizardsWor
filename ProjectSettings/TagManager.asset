@@ -8,6 +8,8 @@ TagManager:
   - Ghost
   - Pip
   - Ground
+  - Enemy
+  - Win
   layers:
   - Default
   - TransparentFX
