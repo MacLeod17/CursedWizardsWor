@@ -63,7 +63,7 @@ public class Character : MonoBehaviourPun
         if (animator.GetBool("Death") || (GameSession.Instance != null && GameSession.Instance.gameWon)) return;
 
         // ***
-        UpdateScores();
+        if (MyScoreText != null && OtherScoreText != null) UpdateScores();
         sinceLastBullet -= Time.deltaTime;
 
         Quaternion orientation = Quaternion.identity;

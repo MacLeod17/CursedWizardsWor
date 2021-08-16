@@ -107,6 +107,9 @@ MonoBehaviour:
   animator: {fileID: 3173428229622868400}
   bulletPrefab: {fileID: 6882084760000487252, guid: ea2439173de23b14f969fd87a86f3f9f, type: 3}
   weaponLocation: {fileID: 3580267120097506602}
+  MyScoreText: {fileID: 0}
+  OtherScoreText: {fileID: 0}
+  score: 0
   speed: 10
   turnRate: 3
   fireRate: 0.5
