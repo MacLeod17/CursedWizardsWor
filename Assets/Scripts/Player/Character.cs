@@ -15,7 +15,6 @@ public class Character : MonoBehaviourPun
     public Transform weaponLocation;
 
     public TMP_Text MyScoreText;
-    public TMP_Text OtherScoreText;
 
     public int score = 0;
     [Min(0.1f)] public float speed = 1;
@@ -49,21 +48,27 @@ public class Character : MonoBehaviourPun
 
     private void Start()
     {
+        if (!photonView.IsMine) return;
+
         velocity *= speed;
         characterController = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
         cameraTransform = Camera.main.transform;
 
-        MyScoreText = GameObject.Find("MyScoreText").GetComponent<TMP_Text>();
-        OtherScoreText = GameObject.Find("OtherScoreText").GetComponent<TMP_Text>();
+        SetScoreUI();
+        //MyScoreText = GameObject.Find("MyScoreText").GetComponent<TMP_Text>();
+        //OtherScoreText = GameObject.Find("OtherScoreText").GetComponent<TMP_Text>();
     }
 
     void Update()
     {
+        if (!photonView.IsMine) return;
         if (animator.GetBool("Death") || (GameSession.Instance != null && GameSession.Instance.gameWon)) return;
 
+        if (MyScoreText == null) SetScoreUI();
+
         // ***
-        if (MyScoreText != null && OtherScoreText != null) UpdateScores();
+        if (MyScoreText != null) UpdateScores();
         sinceLastBullet -= Time.deltaTime;
 
         Quaternion orientation = Quaternion.identity;
@@ -145,6 +150,8 @@ public class Character : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine) return;
+
         if (other.gameObject.CompareTag("Ghost"))
         {
             OnDeath();
@@ -162,30 +169,50 @@ public class Character : MonoBehaviourPun
 
     public void OnDeath()
     {
+        if (!photonView.IsMine) return;
+
         inputDirection = Vector3.zero;
         velocity = Vector3.zero;
         animator.SetFloat("Speed", inputDirection.magnitude);
 
         isDead = true;
         animator.SetBool("Death", isDead);
+
+        GameManager.Instance.LeaveRoom();
     }
 
     public void UpdateScores()
     {
+        if (!photonView.IsMine) return;
+
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players)
         {
             if (PhotonView.Get(player).IsMine)
             {
                 MyScoreText.text = score.ToString("0000");
-                continue;
+                break;
             }
-            else if (!PhotonView.Get(player).IsMine)
+        }
+    }
+
+    public void SetScoreUI()
+    {
+        if (!photonView.IsMine) return;
+
+        Debug.Log("Score UI Unset");
+        GameObject[] textObjects = GameObject.FindGameObjectsWithTag("Score");
+        foreach (var text in textObjects)
+        {
+            var t = text.GetComponent<TMP_Text>();
+            if (t.text.Equals("404"))
             {
-                Character c = player.GetComponent<Character>();
-                OtherScoreText.text = c.score.ToString("0000");
-                continue;
+                text.SetActive(true);
+                this.MyScoreText = text.GetComponent<TMP_Text>();
+                Debug.Log("Score UI Maybe Set");
+                return;
             }
+
         }
     }
 }
