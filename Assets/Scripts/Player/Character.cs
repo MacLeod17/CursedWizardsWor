@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class Character : MonoBehaviourPun
@@ -13,6 +14,10 @@ public class Character : MonoBehaviourPun
     public GameObject bulletPrefab;
     public Transform weaponLocation;
 
+    public TMP_Text MyScoreText;
+    public TMP_Text OtherScoreText;
+
+    public int score = 0;
     [Min(0.1f)] public float speed = 1;
     public float turnRate = 3;
     [Tooltip("This number of seconds must pass between bullet shots.")]
@@ -48,6 +53,9 @@ public class Character : MonoBehaviourPun
         characterController = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
         cameraTransform = Camera.main.transform;
+
+        MyScoreText = GameObject.Find("MyScoreText").GetComponent<TMP_Text>();
+        OtherScoreText = GameObject.Find("OtherScoreText").GetComponent<TMP_Text>();
     }
 
     void Update()
@@ -55,6 +63,7 @@ public class Character : MonoBehaviourPun
         if (animator.GetBool("Death") || (GameSession.Instance != null && GameSession.Instance.gameWon)) return;
 
         // ***
+        UpdateScores();
         sinceLastBullet -= Time.deltaTime;
 
         Quaternion orientation = Quaternion.identity;
@@ -126,6 +135,8 @@ public class Character : MonoBehaviourPun
             sinceLastBullet = fireRate;
 
             GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, weaponLocation.position, Quaternion.identity);
+            Bullet b = bullet.GetComponent<Bullet>();
+            b.parent = this.gameObject;
             Destroy(bullet, 4);
 
             bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 30, ForceMode.VelocityChange);
@@ -157,5 +168,24 @@ public class Character : MonoBehaviourPun
 
         isDead = true;
         animator.SetBool("Death", isDead);
+    }
+
+    public void UpdateScores()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            if (PhotonView.Get(player).IsMine)
+            {
+                MyScoreText.text = score.ToString("0000");
+                continue;
+            }
+            else if (!PhotonView.Get(player).IsMine)
+            {
+                Character c = player.GetComponent<Character>();
+                OtherScoreText.text = c.score.ToString("0000");
+                continue;
+            }
+        }
     }
 }

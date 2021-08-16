@@ -2011,7 +2011,7 @@ GameObject:
   - component: {fileID: 407513509}
   - component: {fileID: 407513508}
   m_Layer: 5
-  m_Name: Score
+  m_Name: OtherScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3778,7 +3778,7 @@ GameObject:
   - component: {fileID: 844120035}
   - component: {fileID: 844120034}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MyScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4143,7 +4143,7 @@ GameObject:
   - component: {fileID: 1025893535}
   - component: {fileID: 1025893534}
   m_Layer: 5
-  m_Name: HighScore
+  m_Name: MyScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5805,7 +5805,7 @@ GameObject:
   - component: {fileID: 1431420467}
   - component: {fileID: 1431420466}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: OtherScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6241,10 +6241,6 @@ PrefabInstance:
     - target: {fileID: 9034464397508532448, guid: 306da7329b1bf7241943c272a583e59b, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 9034464397508532448, guid: 306da7329b1bf7241943c272a583e59b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9034464397508532452, guid: 306da7329b1bf7241943c272a583e59b, type: 3}
       propertyPath: m_RootOrder

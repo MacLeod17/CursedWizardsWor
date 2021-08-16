@@ -19,7 +19,13 @@ public class EnemyHealth : MonoBehaviour
         if (collision.collider.CompareTag("Bullet"))
         {
             health -= 1;
-            if (health <= 0) Destroy(gameObject);
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                Bullet b = collision.gameObject.GetComponent<Bullet>();
+                GameObject player = b.parent;
+                player.GetComponent<Character>().score += 10;
+            }
             Destroy(collision.gameObject);
         }
     }
