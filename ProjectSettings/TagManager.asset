@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - Ghost
+  - Pip
+  - Ground
+  - Enemy
+  - Win
   layers:
   - Default
   - TransparentFX

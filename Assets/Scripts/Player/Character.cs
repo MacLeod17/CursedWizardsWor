@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Character : MonoBehaviour
 {
-    [Range(0, 20)] public float speed = 1;
-    public Animator animator;
     public eSpace space = eSpace.Object;
     public eMovement movement = eMovement.Tank;
+
+    public Animator animator;
+    public GameObject bulletPrefab;
+    public Transform weaponLocation;
+
+    [Min(0.1f)] public float speed = 1;
     public float turnRate = 3;
     public bool isDead = false;
 
@@ -43,7 +48,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        if (animator.GetBool("Death") || GameSession.Instance.gameWon) return;
+        if (animator.GetBool("Death") || (GameSession.Instance != null && GameSession.Instance.gameWon)) return;
 
         // ***
 
@@ -110,6 +115,14 @@ public class Character : MonoBehaviour
 
         // Animator
         animator.SetFloat("Speed", inputDirection.magnitude);
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, weaponLocation.position, Quaternion.identity);
+            Destroy(bullet, 4);
+
+            bullet.GetComponent<Rigidbody>().AddForce(transform.forward * 30, ForceMode.VelocityChange);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
