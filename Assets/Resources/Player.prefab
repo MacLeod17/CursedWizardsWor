@@ -109,6 +109,7 @@ MonoBehaviour:
   weaponLocation: {fileID: 3580267120097506602}
   speed: 10
   turnRate: 3
+  fireRate: 0.5
   isDead: 0
 --- !u!114 &8880872973684650525
 MonoBehaviour:
@@ -136,10 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20212b8db5301984bb32da0f5b07a51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset: {x: 0, y: 2, z: 0}
   distance: 2
-  height: 4
-  smoothSpeed: 5
+  height: 2.25
+  smoothSpeed: 10
 --- !u!143 &9034464397508532453
 CharacterController:
   m_ObjectHideFlags: 0

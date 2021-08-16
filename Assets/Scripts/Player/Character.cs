@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class Character : MonoBehaviour
+public class Character : MonoBehaviourPun
 {
     public eSpace space = eSpace.Object;
     public eMovement movement = eMovement.Tank;
@@ -15,6 +15,8 @@ public class Character : MonoBehaviour
 
     [Min(0.1f)] public float speed = 1;
     public float turnRate = 3;
+    [Tooltip("This number of seconds must pass between bullet shots.")]
+    public float fireRate = 3;
     public bool isDead = false;
 
     public enum eSpace
@@ -38,6 +40,8 @@ public class Character : MonoBehaviour
     Vector3 velocity = Vector3.zero;
     Transform cameraTransform;
 
+    float sinceLastBullet = 0;
+
     private void Start()
     {
         velocity *= speed;
@@ -51,6 +55,7 @@ public class Character : MonoBehaviour
         if (animator.GetBool("Death") || (GameSession.Instance != null && GameSession.Instance.gameWon)) return;
 
         // ***
+        sinceLastBullet -= Time.deltaTime;
 
         Quaternion orientation = Quaternion.identity;
         switch (space)
@@ -116,8 +121,10 @@ public class Character : MonoBehaviour
         // Animator
         animator.SetFloat("Speed", inputDirection.magnitude);
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && sinceLastBullet <= 0)
         {
+            sinceLastBullet = fireRate;
+
             GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, weaponLocation.position, Quaternion.identity);
             Destroy(bullet, 4);
 

@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 1184472718974999847}
   - component: {fileID: -7144399505682010447}
   - component: {fileID: 1249806014532824507}
+  - component: {fileID: 6604573385360387869}
   m_Layer: 7
   m_Name: 420nug
   m_TagString: Ghost
@@ -605,6 +606,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6604573385360387869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2690169333223445293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671549129feeac24f8eac594fed67ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1001 &5519050020209358831
 PrefabInstance:
   m_ObjectHideFlags: 0

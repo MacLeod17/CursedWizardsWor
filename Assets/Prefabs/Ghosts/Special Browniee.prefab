@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: -5294231517201692478}
   - component: {fileID: 8410770496150951187}
   - component: {fileID: -2694583512177750360}
+  - component: {fileID: 5315842870380137803}
   m_Layer: 7
   m_Name: Special Browniee
   m_TagString: Ghost
@@ -415,6 +416,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5315842870380137803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706871203598195571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671549129feeac24f8eac594fed67ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1 &2706871204381926445
 GameObject:
   m_ObjectHideFlags: 0

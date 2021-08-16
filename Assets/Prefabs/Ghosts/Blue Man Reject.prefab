@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 5266781658774666775}
   - component: {fileID: -750511704527675509}
   - component: {fileID: -5373972815671921646}
+  - component: {fileID: 1519116578264762014}
   m_Layer: 7
   m_Name: Blue Man Reject
   m_TagString: Ghost
@@ -605,6 +606,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1519116578264762014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8837203920612630717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671549129feeac24f8eac594fed67ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
 --- !u!1001 &7163654064170867678
 PrefabInstance:
   m_ObjectHideFlags: 0
